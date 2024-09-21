@@ -1,15 +1,13 @@
-
 'use client';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation'; 
-import { FaChartBar, FaUserCircle } from 'react-icons/fa';
-import { BsPeopleFill } from "react-icons/bs";
-import { FaPeopleLine, FaUserNurse } from "react-icons/fa6";
-import { PiHospitalFill } from "react-icons/pi";
+import { usePathname } from 'next/navigation'; 
+import { FaChartBar, FaUserCircle, FaUserNurse } from 'react-icons/fa';
+import { BsPeopleFill } from 'react-icons/bs';
+import { PiHospitalFill } from 'react-icons/pi';
+import Image from 'next/image';
 
 const Sidebar = () => {
-  const router = useRouter(); 
   const pathname = usePathname(); 
   const [isMounted, setIsMounted] = useState(false);
 
@@ -35,13 +33,12 @@ const Sidebar = () => {
   return (
     <div className="fixed h-screen w-72 bg-white text-gray-800 flex flex-col px-6 border-4 border-[#02A6A6] font-nunito">
       <div className="flex items-center justify-center h-20 border-b border-[#02A6A6]">
-        <img src="/images/logomamamind.png" alt="Logo" className="w-64 h-64 mt-24 object-contain" />
+        <Image src="/images/logomamamind.png" alt="Logo" width={256} height={256} />
       </div>
 
       <nav className="flex-1 px-2 py-4 space-y-20 mt-24">
         <SidebarItem Icon={FaChartBar} label="Dashboard" path="/dashboard" />
         <SidebarItem Icon={BsPeopleFill} label="Mothers' Details" path="/mothers-details" />
-        <SidebarItem Icon={FaPeopleLine} label="CHPS' Details" path="/chps-details" />
         <SidebarItem Icon={FaUserNurse} label="Nurses" path="/nurses" />
         <SidebarItem Icon={PiHospitalFill} label="Nurse Admin" path="/nurse-admin" />
         <SidebarItem Icon={FaUserCircle} label="Profile" path="/profile" />
