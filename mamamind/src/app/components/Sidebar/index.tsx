@@ -20,13 +20,13 @@ const Sidebar = () => {
   }
 
   const SidebarItem = ({ Icon, label, path }: { Icon: React.ElementType, label: string, path: string }) => {
-    const isActive = pathname === path; 
+    const isActive = pathname === path; // Check if the current pathname matches the path for the sidebar item
 
     return (
       <Link href={path} className={`group flex items-center px-4 py-2 ${isActive ? 'text-[#F18721] bg-[#662113]' : 'text-gray-700 hover:bg-[#F18721]'} transition-colors duration-200`}>
-      <Icon className={`mr-3 text-2xl ${isActive ? 'text-white' : 'text-gray-700 group-hover:text-white'}`} />
-      <span className={`font-bold text-[18px] ${isActive ? 'text-white' : 'group-hover:text-white'}`}>{label}</span>
-    </Link>
+        <Icon className={`mr-3 text-2xl ${isActive ? 'text-white' : 'text-gray-700 group-hover:text-white'}`} />
+        <span className={`font-bold text-[18px] ${isActive ? 'text-white' : 'group-hover:text-white'}`}>{label}</span>
+      </Link>
     );
   };
 
@@ -39,7 +39,7 @@ const Sidebar = () => {
       <nav className="flex-1 px-2 py-4 space-y-20 mt-24">
         <SidebarItem Icon={FaChartBar} label="Dashboard" path="/dashboard" />
         <SidebarItem Icon={BsPeopleFill} label="Mothers' Details" path="/mothers-details" />
-        <SidebarItem Icon={FaUserNurse} label="Nurses" path="/nurses" />
+        <SidebarItem Icon={FaUserNurse} label="Nurses" path="/nurses" /> {/* This will only be active when '/nurses' is the current path */}
         <SidebarItem Icon={PiHospitalFill} label="Nurse Admin" path="/nurse-admin" />
         <SidebarItem Icon={FaUserCircle} label="Profile" path="/profile" />
       </nav>
