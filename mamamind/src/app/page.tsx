@@ -1,11 +1,10 @@
 "use client";
 
-import Layout from "./Layout";
-
+import Signup from "./signup/page";
 export default function Home() {
   return (
-<Layout>
-
-</Layout>
+    <div>
+      <Signup/>
+    </div>
   );
 }

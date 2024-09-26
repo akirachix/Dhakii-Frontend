@@ -29,6 +29,7 @@ const Sidebar = () => {
       <Icon className={`mr-3 text-2xl ${isActive ? 'text-white' : 'text-gray-700 group-hover:text-white'}`} />
       <span className={`font-bold text-[18px] ${isActive ? 'text-white' : 'group-hover:text-white'}`}>{label}</span>
     </Link>
+    
     );
   };
 
