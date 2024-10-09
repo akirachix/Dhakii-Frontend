@@ -39,7 +39,7 @@ const Sidebar = () => {
       </div>
 
       <nav className="flex-1 px-2 py-4 space-y-20 mt-24">
-        <SidebarItem Icon={FaChartBar} label="Dashboard" path="../Graphs" />
+      <SidebarItem Icon={FaChartBar} label="Dashboard" path="/dashboard/pages" />
         <SidebarItem Icon={BsPeopleFill} label="Mothers' Details" path="/mothers-details" />
         <SidebarItem Icon={FaPeopleLine} label="CHPS' Details" path="/chps-details" />
         <SidebarItem Icon={FaUserNurse} label="Nurses" path="/nurses" />

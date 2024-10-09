@@ -1,48 +1,38 @@
+'use client'
+
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-import getPpdPrevalence from "@/app/hooks/getPpdPrevalence";
+import { usePpdPrevalence } from "@/app/hooks/getPpdPrevalence";  
 import { getMothersStatistics } from '@/app/utils/motherStatistics';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const PrevalenceCharts: React.FC = () => {
-  const { ppdMothers, data, loading, error } = getPpdPrevalence();
+export const PrevalenceCharts: React.FC = () => {
+  const { ppdMothers, data, loading, error } = usePpdPrevalence();
   console.log("PPD Mothers:", ppdMothers);
   console.log("Data:", data);
-
 
   if (loading) return <div>Loading...</div>;  
   if (error) return <div>Error: {error}</div>;  
 
-  
   const withoutPpd = data.filter((mother) => mother.total_score <= 10).length; 
-  const withPpd = data.filter((mother) => mother.total_score > 10).length; 
+  const withPpd = ppdMothers.length;
 
-  const screeningScores = ppdMothers.map(mother => mother.total_score);
-
-  if (ppdMothers.length === 0 || screeningScores.length === 0) {
-    return <div>No data available</div>;
-  }
-
-  const { villages, ageGroups } = getMothersStatistics(ppdMothers, screeningScores);
+  const { villages, ageGroups } = getMothersStatistics(ppdMothers);
   
   console.log("Villages:", villages); 
-  
+  console.log("Age Groups:", ageGroups);
 
-  if (!Array.isArray(villages) || typeof ageGroups !== 'object') {
-    console.error("Invalid statistics format:", { villages, ageGroups });
-    return <div>Error: Invalid statistics data.</div>;
+  if (villages.length === 0 || Object.keys(ageGroups).length === 0) {
+    return <div>No data available for villages or age groups.</div>;
   }
 
   const regionData = villages.map((village) => {
-    const count = ppdMothers.filter((mother) => mother.mother?.village === village).length;
-    console.log(`Count for ${village}:`, count);
-    return count;
- }).filter(count => count > 0); 
+    return ppdMothers.filter((mother) => mother.mother?.village === village).length;
+  });
 
-console.log("Region Data:", regionData);
-
+  console.log("Region Data:", regionData);
 
   const ageData = Object.values(ageGroups); 
   console.log("Age Data:", ageData); 
@@ -100,11 +90,7 @@ console.log("Region Data:", regionData);
         <div className="bg-white p-4 rounded-lg shadow-md flex-1">
           <h3 className="text-lg font-medium mb-2">Prevalence of PPD by Region</h3>
           <div className="w-full h-64">
-            {regionData.length > 0 ? (
-              <Bar data={regionPPDData} options={{ maintainAspectRatio: false }} />
-            ) : (
-              <div>No data available for the region chart</div>
-            )}
+            <Bar data={regionPPDData} options={{ maintainAspectRatio: false }} />
           </div>
           <p className="text-sm text-gray-600 mt-2">
             This chart depicts the number of mothers affected by PPD in various regions.
@@ -125,4 +111,6 @@ console.log("Region Data:", regionData);
   );
 };
 
-export default PrevalenceCharts;
+
+
+

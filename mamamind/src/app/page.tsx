@@ -1,15 +1,14 @@
 "use client";
 import Layout from "./Layout";
-import Dashboard from "./components/Dashboard";
-import Graphs from './components/Graphs';
+import { PrevalenceCharts } from "./components/graphs";
 
 
 
 export default function Home() {
   return (
 <Layout>
-<Graphs />
-<Dashboard/>
+ 
+<PrevalenceCharts />
 </Layout>
   );
 }
