@@ -1,10 +1,18 @@
 import { useState, useEffect } from 'react';
 import { fetchCHPs } from '@/app/utils/chp';
 
+interface CHP {
+  id: number;
+  first_name: string;
+  last_name: string;
+  village: string;
+}
+
 export const useFetchCHPs = () => {
-  const [chps, setCHPs] = useState<any[]>([]);
+  const [chps, setCHPs] = useState<CHP[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+
+ 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -12,7 +20,7 @@ export const useFetchCHPs = () => {
         const data = await fetchCHPs();
         setCHPs(data);
       } catch (error) {
-        setError('Error fetching CHPs');
+        console.error('Error fetching CHPs:', error); 
       } finally {
         setLoading(false);
       }
@@ -21,5 +29,6 @@ export const useFetchCHPs = () => {
     fetchData();
   }, []);
 
-  return { chps, loading, error };
+  return { chps, loading };
 };
+

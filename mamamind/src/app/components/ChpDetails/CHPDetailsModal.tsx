@@ -12,6 +12,7 @@ interface CHP {
   sub_location: string;
   registered_date: string;
   email: string;
+  username: string;
 }
 
 interface CHPDetailsModalProps {
@@ -25,7 +26,7 @@ export const CHPDetailsModal: React.FC<CHPDetailsModalProps> = ({ isOpen, onClos
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
-      <div className="relative bg-white p-10 pt-16 pb-16 rounded-md shadow-xl w-[1000px]"> {/* Adjusted padding for top and bottom */}
+      <div className="relative bg-white p-10 pt-16 pb-16 rounded-md shadow-xl w-[1000px]">
         <IoMdClose
           className="absolute top-3 right-3 text-3xl cursor-pointer"
           onClick={onClose}
@@ -35,7 +36,7 @@ export const CHPDetailsModal: React.FC<CHPDetailsModalProps> = ({ isOpen, onClos
           Details of the CHP
         </h2>
 
-        <div className="grid grid-cols-2 gap-x-6 gap-y-8 text-xl font-nunito px-10"> {/* Further reduced gap and increased padding */}
+        <div className="grid grid-cols-2 gap-x-6 gap-y-8 text-xl font-nunito px-10">
           <div>
             <p><strong>Full Name:</strong> {`${chp.first_name} ${chp.last_name}`}</p>
           </div>
@@ -60,8 +61,13 @@ export const CHPDetailsModal: React.FC<CHPDetailsModalProps> = ({ isOpen, onClos
           <div>
             <p><strong>Email:</strong> {chp.email}</p>
           </div>
+          <div>
+            <p><strong>Username:</strong> {chp.username}</p>
+          </div>
         </div>
       </div>
     </div>
   );
 };
+
+

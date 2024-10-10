@@ -5,6 +5,8 @@ import { AddCHPModal } from '../components/ChpDetails/AddCHPModal';
 import { Toast } from '../components/ChpDetails/Toast';
 import { CHPDetailsModal } from '../components/ChpDetails/CHPDetailsModal'; 
 import { useCHPs } from '@/app/hooks/useCHPs';
+import { FormData } from '@/app/utils/chp'; 
+import {CHP} from '../hooks/useGetChpData'
 
 const CHPsPage = () => {
   const {
@@ -18,7 +20,7 @@ const CHPsPage = () => {
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
-  const [selectedCHP, setSelectedCHP] = useState<any | null>(null);
+  const [selectedCHP, setSelectedCHP] = useState<CHP | null>(null);
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState<'success' | 'error'>('success');
   const [loading, setLoading] = useState(true);
@@ -35,7 +37,7 @@ const CHPsPage = () => {
     setTimeout(() => setToastMessage(''), 1000);
   };
 
-  const onAddCHP = async (chpData: any) => {
+  const onAddCHP = async (chpData: FormData) => {
     try {
       await handleAddCHP(chpData);
       showToast('CHP added successfully', 'success');
@@ -45,7 +47,7 @@ const CHPsPage = () => {
     }
   };
 
-  const handleCHPClick = (chp: any) => {
+  const handleCHPClick = (chp: CHP) => {
     setSelectedCHP(chp);
     setShowDetailsModal(true);
   };

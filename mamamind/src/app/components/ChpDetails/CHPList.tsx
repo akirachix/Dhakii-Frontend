@@ -7,6 +7,14 @@ interface CHP {
   first_name: string;
   last_name: string;
   village: string;
+  reg_no: string;
+  phone_number: string;
+  location: string;
+  sub_location: string;
+  email: string;
+  username: string;
+  registered_date: string;
+  user: string;
 }
 
 interface CHPListProps {

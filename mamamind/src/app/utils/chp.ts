@@ -1,12 +1,29 @@
 import { fetchCHPsAPI, addCHPAPI } from '../api/chp';
 
-// Fetch CHPs with merged user data
+export interface FormData {
+  first_name: string;
+  last_name: string;
+  username: string;
+  phone_number: string;
+  email: string;
+  reg_no: string;
+  location: string;
+  sub_location: string;
+  village: string;
+  registered_date: string;
+  user: string;
+}
+
+export interface CHP extends FormData {
+  id: number;
+}
+
 export async function fetchCHPs() {
   try {
-    const { chpData, userData } = await fetchCHPsAPI(); 
+    const { chpData, userData } = await fetchCHPsAPI();
 
-    // Merging CHP data with user data
-    const mergedData = chpData.map((chp: any) => {
+    const mergedData = chpData.map((chp: CHP) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const user = userData.find((u: any) => String(u.id) === String(chp.user));
       return {
         ...chp,
@@ -18,15 +35,14 @@ export async function fetchCHPs() {
       };
     });
 
-    return mergedData; 
+    return mergedData;
   } catch (error) {
     console.error('Error fetching CHPs:', error);
     throw new Error('Failed to fetch CHPs');
   }
 }
 
-// Add CHP
-export async function addCHP(chpData: any) {
+export async function addCHP(chpData: FormData) {
   try {
     const response = await addCHPAPI(chpData);
     if (!response.ok) {
@@ -38,3 +54,6 @@ export async function addCHP(chpData: any) {
     throw new Error('Failed to add CHP');
   }
 }
+
+
+

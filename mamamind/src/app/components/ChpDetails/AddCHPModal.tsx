@@ -1,25 +1,11 @@
 'use client';
 import React, { useState } from 'react';
+import { FormData } from '@/app/utils/chp'; 
 
 interface AddCHPModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onAddCHP: (chpData: any) => void;
-}
-
-// Define the structure of formData with all necessary fields
-interface FormData {
-  first_name: string;
-  last_name: string;
-  username: string;
-  phone_number: string;
-  email: string;
-  reg_no: string;
-  location: string;
-  sub_location: string;
-  village: string;
-  registered_date: string;
-  user: string;
+  onAddCHP: (chpData: FormData) => void; 
 }
 
 export const AddCHPModal: React.FC<AddCHPModalProps> = ({ isOpen, onClose, onAddCHP }) => {
@@ -37,13 +23,10 @@ export const AddCHPModal: React.FC<AddCHPModalProps> = ({ isOpen, onClose, onAdd
     user: ''
   });
 
-  const [showInviteModal, setShowInviteModal] = useState(false);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // List of required fields to be validated
   const requiredFields: (keyof FormData)[] = [
     'first_name',
     'last_name',
@@ -58,7 +41,6 @@ export const AddCHPModal: React.FC<AddCHPModalProps> = ({ isOpen, onClose, onAdd
     'user'
   ];
 
-  // Handle form submission and validation
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -71,7 +53,6 @@ export const AddCHPModal: React.FC<AddCHPModalProps> = ({ isOpen, onClose, onAdd
 
     onAddCHP(formData);
     onClose();
-    setShowInviteModal(true); 
   };
 
   if (!isOpen) return null;
@@ -246,6 +227,5 @@ export const AddCHPModal: React.FC<AddCHPModalProps> = ({ isOpen, onClose, onAdd
     </div>
   );
 };
-
 
 
