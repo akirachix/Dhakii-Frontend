@@ -1,12 +1,12 @@
-"use client";
 
-import Layout from "./Layout";
-import Sidebar from "./components/Sidebar";
+'use client';
+
+import CHPsPage from './chps/page'; 
 
 export default function Home() {
   return (
-    <Layout>
-      <Sidebar />
-    </Layout>
+    <div>
+        <CHPsPage />
+    </div>
   );
 }
