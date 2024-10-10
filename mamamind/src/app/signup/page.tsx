@@ -56,6 +56,8 @@ const Signup = () => {
       setApiError((error as Error).message || 'Something went wrong. Please try again.');
     }
   };
+  
+  
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -87,7 +89,7 @@ const Signup = () => {
                   type={field === "email" ? "email" : "text"}
                   placeholder={`Enter ${field}`}
                   {...register(field as keyof SignupFormData)}
-                  className="w-full px-4 py-2 rounded-lg text-black border-2 border-[#02A6A6] placeholder:text-[15px] focus:outline-none focus:border-[#F18721]"
+                  className="w-full h-14 px-4 py-2 rounded-lg text-black border-2 border-[#02A6A6] placeholder:text-[15px] focus:outline-none focus:border-[#F18721]"
                 />
                 {errors[field as keyof SignupFormData] && (
                   <p className="text-red-500 text-xs mt-1">{errors[field as keyof SignupFormData]?.message}</p>
@@ -102,7 +104,7 @@ const Signup = () => {
               <select
                 id="role"
                 {...register("role")}
-                className="w-full px-4 py-2 rounded-lg text-black border-2 border-[#02A6A6] bg-white focus:outline-none focus:border-[#F18721]"
+                className="w-full h-14 px-4 py-2 rounded-lg text-black border-2 border-[#02A6A6] bg-white focus:outline-none focus:border-[#F18721]"
               >
                 <option value="">Select role</option>
                 <option value="nurse">Nurse</option>
@@ -123,7 +125,7 @@ const Signup = () => {
                 type={passwordVisible ? "text" : "password"}
                 placeholder="Enter password"
                 {...register("password")}
-                className="w-full px-4 py-2 rounded-lg text-black border-2 border-[#02A6A6] placeholder:text-[15px] focus:outline-none focus:border-[#F18721]"
+                className="w-full h-14 px-4 py-2 rounded-lg text-black border-2 border-[#02A6A6] placeholder:text-[15px] focus:outline-none focus:border-[#F18721]"
               />
               {errors.password && (
                 <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
