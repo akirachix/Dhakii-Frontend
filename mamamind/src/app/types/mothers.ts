@@ -2,7 +2,7 @@
 export interface Mother {
     id: number;                   
     total_score: number;          
-    mother: any;                  
+    mother?: Mother | null;                 
     first_name: string;           
     last_name: string;            
     date_of_birth: string;        
