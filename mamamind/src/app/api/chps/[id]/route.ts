@@ -1,3 +1,4 @@
+// const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://mamamind-db02af72f48f.herokuapp.com';
 const baseUrl = process.env.BASE_URL;
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {

@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useState } from 'react';
 
 interface CHP {
@@ -19,9 +18,9 @@ interface CHP {
 
 interface CHPListProps {
   chps: CHP[];
-  loading: boolean; 
+  loading: boolean;
   currentPage: number;
-  searchQuery: string; 
+  searchQuery: string;
   onPageChange: (page: number) => void;
   onCHPClick: (chp: CHP) => void;
 }
@@ -48,7 +47,7 @@ export const CHPList: React.FC<CHPListProps> = ({
   };
 
   return (
-    <div className="mt-8">
+    <div className="mt-8 px-4"> {/* Added padding to both sides */}
       {loading ? (
         <p className="text-center text-gray-500 text-lg">Loading CHP list...</p>
       ) : chps.length === 0 && searchQuery.length > 0 ? (
@@ -80,11 +79,11 @@ export const CHPList: React.FC<CHPListProps> = ({
         </table>
       )}
       {chps.length !== 0 && !loading && (
-        <div className="flex justify-end mt-4">
+        <div className="flex justify-end mt-4 pr-4"> 
           <button
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="px-4 py-2 mx-1 bg-gray-200 text-gray-800 rounded-md disabled:opacity-50"
+            className="px-4 py-2 mx-1 bg-gray-200 text-gray-800 rounded-md text-base disabled:opacity-50"
           >
             Back
           </button>
@@ -92,7 +91,7 @@ export const CHPList: React.FC<CHPListProps> = ({
             <button
               key={page}
               onClick={() => onPageChange(page)}
-              className={`px-4 py-2 mx-1 rounded-md ${
+              className={`px-4 py-2 mx-1 rounded-md text-base ${
                 currentPage === page ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'
               }`}
             >
@@ -102,7 +101,7 @@ export const CHPList: React.FC<CHPListProps> = ({
           <button
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="px-4 py-2 mx-1 bg-gray-200 text-gray-800 rounded-md disabled:opacity-50"
+            className="px-4 py-2 mx-1 bg-gray-200 text-gray-800 rounded-md text-base disabled:opacity-50"
           >
             Next
           </button>

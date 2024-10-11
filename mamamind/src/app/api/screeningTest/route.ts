@@ -1,11 +1,10 @@
 
 import { NextResponse } from 'next/server';
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
 
 export async function GET() {
   try {
-    const response = await fetch(`${baseURL}/api/screeningtestscore/`);
+    const response = await fetch('https://mamamind-db02af72f48f.herokuapp.com/api/screeningtestscore/');
     if (!response.ok) {
       throw new Error('Failed to fetch scores');
     }
