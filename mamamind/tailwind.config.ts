@@ -15,6 +15,10 @@ const config: Config = {
       fontFamily: {
         nunito: ['Nunito', 'sans-serif'],
       },
+      color:{
+        blue:"#02A6A6",
+        orange:"#F18721"
+      }
     },
   },
   plugins: [],
