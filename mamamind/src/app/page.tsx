@@ -1,12 +1,11 @@
-"use client";
+'use client';
 
-import Layout from "./Layout";
-import Sidebar from "./components/Sidebar";
+import HospitalsPage from './hospitals/page'; 
 
 export default function Home() {
   return (
-    <Layout>
-      <Sidebar />
-    </Layout>
+    <div>
+      <HospitalsPage /> 
+    </div>
   );
 }
