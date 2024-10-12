@@ -14,7 +14,6 @@ const NurseList = () => {
   const [selectedNurse, setSelectedNurse] = useState<Nurse | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Update filtered nurses when the fetched nurses change
   useEffect(() => {
     setFilteredNurses(nurses);
   }, [nurses]);
