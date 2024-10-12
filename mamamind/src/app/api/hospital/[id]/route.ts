@@ -4,13 +4,13 @@ export async function GET(request: Request, { params }: { params: { id: string }
   const { id } = params;
 
   if (!id) {
-    return new Response('CHP not found', {
+    return new Response('Hospital not found', {
       status: 404,
     });
   }
 
   try {
-    const res = await fetch(`${baseUrl}/api/chps/${id}/`, {
+    const res = await fetch(`${baseUrl}/api/hospitals/${id}/`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -23,12 +23,12 @@ export async function GET(request: Request, { params }: { params: { id: string }
       });
     }
 
-    const chpData = await res.json();
-    return new Response(JSON.stringify(chpData), {
+    const hospitalData = await res.json();
+    return new Response(JSON.stringify(hospitalData), {
       status: 200,
     });
   } catch (error) {
-    console.error('Error fetching CHP data:', error);
+    console.error('Error fetching hospital data:', error);
     return new Response((error as Error).message, {
       status: 500,
     });
