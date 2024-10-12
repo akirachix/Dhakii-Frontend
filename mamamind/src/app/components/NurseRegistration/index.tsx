@@ -97,7 +97,6 @@ const NurseRegistrationForm: React.FC<NurseRegistrationFormProps> = ({
 ))}
 
 
-            {/* Select Dropdown for Hospital */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Hospital <span className="text-red-500">*</span>
@@ -118,7 +117,6 @@ const NurseRegistrationForm: React.FC<NurseRegistrationFormProps> = ({
               )}
             </div>
 
-            {/* Select Dropdown for Gender */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Gender <span className="text-red-500">*</span>
