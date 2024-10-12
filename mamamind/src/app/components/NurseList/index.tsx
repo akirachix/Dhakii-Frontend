@@ -32,7 +32,7 @@ const NurseList = () => {
         .includes(query)
     );
     setFilteredNurses(filtered);
-    setCurrentPage(1); // Reset to first page when searching
+    setCurrentPage(1); 
   };
 
   const handleClearSearch = () => {
