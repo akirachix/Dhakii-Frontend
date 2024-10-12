@@ -15,6 +15,10 @@ const config: Config = {
       fontFamily: {
         nunito: ['Nunito', 'sans-serif'],
       },
+      screens: {
+        'nest-hub': { 'min': '1024px', 'max': '600px' },
+        'nest-hub-max': { 'min': '1280px', 'max': '800px' },
+      },
     },
   },
   plugins: [],

@@ -9,5 +9,5 @@ export function middleware(req: Request) {
     return NextResponse.next();
 }
 export const config = {
-    matcher: ['/sign-up'],
+    matcher: ['/login'],
 };
