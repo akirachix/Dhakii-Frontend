@@ -38,7 +38,7 @@ const NurseList = () => {
   const handleClearSearch = () => {
     setSearchQuery("");
     setFilteredNurses(nurses);
-    setCurrentPage(1); // Reset to first page when clearing search
+    setCurrentPage(1);
   };
 
   const handleNurseClick = (nurse: Nurse) => {
