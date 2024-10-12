@@ -9,7 +9,7 @@ export const useNurses = () => {
   useEffect(() => {
     const fetchNurses = async () => {
       try {
-        const response = await fetch('/api/nurses');  // Adjust your API endpoint
+        const response = await fetch('/api/nurses');  
         if (!response.ok) {
           throw new Error('Failed to fetch nurses');
         }
