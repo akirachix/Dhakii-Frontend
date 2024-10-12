@@ -16,8 +16,8 @@ export const fetchNurseById = async (id: number): Promise<Nurse> => {
     const data = await response.json() as Nurse;
     console.log('Fetched nurse data:', data);
     return data;
-  } catch (error: any) {
-    console.error('Error fetching nurse data:', error.message || error);
+  } catch (error) {
+    console.error('Error fetching nurse data:', (error as Error).message || error);
     throw new Error('Failed to fetch nurse data');
   }
 };

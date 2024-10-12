@@ -3,7 +3,7 @@ export interface Nurse {
   lastname: string;
   hospital: string;
   phone_number: string;
-  nurse_id: number;
+  nurse_id?: number;
   email: string;
   username: string;
   gender: string;
@@ -16,6 +16,7 @@ export interface NurseData {
   email: string;
   firstname: string;
   lastname: string;
+  password: string; 
   reg_no: string;
   sub_location: string;
   hospital: string;

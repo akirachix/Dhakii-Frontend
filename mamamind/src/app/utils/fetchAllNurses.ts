@@ -33,8 +33,8 @@ export const fetchNurses = async (page: number = 1, itemsPerPage: number = 10): 
       nurses: data.slice((page - 1) * itemsPerPage, page * itemsPerPage), // Paginate the array locally
       totalPages, // Manually calculate totalPages based on the array size
     };
-  } catch (error: any) {
-    console.error("Error fetching nurses data:", error.message || error);
+  } catch (error) {
+    console.error("Error fetching nurses data:", (error as Error).message || error);
     throw new Error("Failed to fetch nurses");
   }
 };

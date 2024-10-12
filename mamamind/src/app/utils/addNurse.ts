@@ -40,8 +40,8 @@ export const addNurse = async (data: NurseType): Promise<NurseType> => {
     const newNurse = (await response.json()) as NurseType;
     console.log("Added nurse data:", newNurse);
     return newNurse;
-  } catch (error: any) {
-    console.error("Error adding nurse data:", error.message || error);
+  } catch (error) {
+    console.error("Error adding nurse data:", (error as Error).message || error);
     throw new Error("Failed to add nurse");
   }
 };

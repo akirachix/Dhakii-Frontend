@@ -23,8 +23,8 @@ export const useNurses = () => {
       } else {
         throw new Error("Invalid nurses data.");
       }
-    } catch (err: any) {
-      setError(err.message || 'Failed to fetch nurses');
+    } catch (error) {
+      setError((error as Error).message || 'Failed to fetch nurses');
       setNurses([]);  // Clear the list in case of error
     } finally {
       setLoading(false);

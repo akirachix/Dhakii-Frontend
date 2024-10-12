@@ -78,10 +78,10 @@ export async function POST(req: Request) {
     console.log("Nurse created successfully:", result);
     return NextResponse.json(result);
 
-  } catch (error: any) {
+  } catch (error) {
     console.error("Detailed error:", error);
     
-    if (error.name === "AbortError") {
+    if ((error as Error).name === "AbortError") {
       console.error("Fetch aborted due to timeout");
       return NextResponse.json(
         { error: "Request timed out. Please try again." },
@@ -89,9 +89,9 @@ export async function POST(req: Request) {
       );
     }
 
-    console.error("Internal Server Error:", error.message || error);
+    console.error("Internal Server Error:", (error as Error).message || error);
     return NextResponse.json(
-      { error: "Internal Server Error", details: error.message },
+      { error: "Internal Server Error", details: (error as Error).message },
       { status: 500 }
     );
   }

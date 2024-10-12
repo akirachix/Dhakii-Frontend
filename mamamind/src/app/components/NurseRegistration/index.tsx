@@ -69,32 +69,33 @@ const NurseRegistrationForm: React.FC<NurseRegistrationFormProps> = ({
         <h2 className="text-2xl lg:text-3xl font-bold mb-4 text-left text-[#02A6A6]">Register Nurse</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4">
-            {[
-              { label: "Username", name: "username" },
-              { label: "Email", name: "email" },
-              { label: "Password", name: "password" },
-              { label: "First Name", name: "firstname" },
-              { label: "Last Name", name: "lastname" },
-              { label: "Reg No", name: "reg_no" },
-              { label: "Sub-Location", name: "sub_location" },
-              { label: "Phone Number", name: "phone_number" },
-            ].map(({ label, name }) => (
-              <div key={name}>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  {label} <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type={name === "email" ? "email" : name === "password" ? "password" : "text"}
-                  {...register(name)}
-                  className={`border border-gray-300 rounded-md p-2 w-full text-sm focus:outline-none focus:border-[#02A6A6] focus:ring-[#02A6A6] focus:ring-1 ${
-                    errors[name as keyof NurseData] ? "border-red-500" : ""
-                  }`}
-                />
-                {errors[name as keyof NurseData] && (
-                  <p className="text-red-500 text-xs mt-1">{errors[name as keyof NurseData]?.message}</p>
-                )}
-              </div>
-            ))}
+           {[
+  { label: "Username", name: "username" as const },
+  { label: "Email", name: "email" as const },
+  { label: "Password", name: "password" as const },
+  { label: "First Name", name: "firstname" as const },
+  { label: "Last Name", name: "lastname" as const },
+  { label: "Reg No", name: "reg_no" as const },
+  { label: "Sub-Location", name: "sub_location" as const },
+  { label: "Phone Number", name: "phone_number" as const },
+].map(({ label, name }) => (
+  <div key={name}>
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      {label} <span className="text-red-500">*</span>
+    </label>
+    <input
+      type={name === "email" ? "email" : name === "password" ? "password" : "text"}
+      {...register(name)}
+      className={`border border-gray-300 rounded-md p-2 w-full text-sm focus:outline-none focus:border-[#02A6A6] focus:ring-[#02A6A6] focus:ring-1 ${
+        errors[name] ? "border-red-500" : ""
+      }`}
+    />
+    {errors[name] && (
+      <p className="text-red-500 text-xs mt-1">{errors[name]?.message}</p>
+    )}
+  </div>
+))}
+
 
             {/* Select Dropdown for Hospital */}
             <div>

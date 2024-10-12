@@ -15,9 +15,9 @@ export const useNurseById = (id: number) => {
         const data = await fetchNurseById(id);
         console.log('Fetched nurse data in hook:', data);
         setNurse(data); 
-      } catch (err: any) {
-        console.error('Error fetching nurse:', err);
-        setError(err.message || 'Failed to fetch nurse'); 
+      } catch (error) {
+        console.error('Error fetching nurse:', (error));
+        setError((error as Error).message || 'Failed to fetch nurse'); 
       } finally {
         setLoading(false); 
       }

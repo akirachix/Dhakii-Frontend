@@ -15,8 +15,8 @@ export const useNurses = () => {
         }
         const data = await response.json();
         setNurses(data);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (error) {
+        setError((error as Error).message);
       } finally {
         setLoading(false);
       }

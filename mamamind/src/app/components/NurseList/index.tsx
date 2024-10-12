@@ -6,7 +6,7 @@ import NurseDetailsModal from "@/app/components/NurseDetails";
 import { Nurse } from "@/app/utils/types";
 
 const NurseList = () => {
-  const { nurses, loading, error, currentPage, setCurrentPage, totalPages, refetch } = useNurses();
+  const { nurses, loading, error, currentPage, setCurrentPage, totalPages } = useNurses();
 
   const [filteredNurses, setFilteredNurses] = useState<Nurse[]>([]);
   const [showModal, setShowModal] = useState(false);

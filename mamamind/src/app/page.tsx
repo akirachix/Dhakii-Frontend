@@ -1,10 +1,12 @@
 "use client";
-
-import Layout from "./Layout";
 import NurseList from "./components/NurseList";
+import { PrevalenceCharts } from "./components/graphs";
 
 export default function Home() {
   return (
-       <NurseList/>
+    <div>
+      <NurseList />
+      <PrevalenceCharts />
+    </div>
   );
 }
