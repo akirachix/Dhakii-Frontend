@@ -1,15 +1,10 @@
-"use client";
-import HospitalsPage from './hospitals/page'; 
+"use client"; 
 import { PrevalenceCharts } from "./components/graphs";
-import Sidebar from './components/Sidebar';
-
-
 
 export default function Home() {
   return (
     <div>
-
-<PrevalenceCharts/> 
+      <PrevalenceCharts/> 
     </div>
   );
 
