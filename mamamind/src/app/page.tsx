@@ -1,11 +1,7 @@
-"use client";
-
-import Layout from "./Layout";
-
+import MothersDetails from "./mothersDetails/page";
 export default function Home() {
   return (
-<Layout>
-
-</Layout>
+      <MothersDetails />
+    
   );
 }
