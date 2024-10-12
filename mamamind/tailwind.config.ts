@@ -15,6 +15,10 @@ const config: Config = {
       fontFamily: {
         nunito: ['Nunito', 'sans-serif'],
       },
+      screens: {
+        'next-hub': '1024px',  
+        'next-hub-max': '1280px',
+      },
     },
   },
   plugins: [],
