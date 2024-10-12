@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FaChartBar,FaUserNurse } from 'react-icons/fa';
+import { FaChartBar, FaUserNurse } from 'react-icons/fa';
 import { BsPeopleFill } from 'react-icons/bs';
 import { PiHospitalFill } from 'react-icons/pi';
 import { RiTeamFill } from 'react-icons/ri';
