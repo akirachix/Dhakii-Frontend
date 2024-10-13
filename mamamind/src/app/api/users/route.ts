@@ -5,12 +5,10 @@ export async function POST(request: NextRequest) {
   try {
     const { email, username, first_name, last_name, phone_number, user_role, password } = await request.json();
 
-    // Validate required fields
     if (!first_name || !last_name || !email || !password || !user_role || !phone_number || !username) {
       return NextResponse.json({ error: "All fields are required" }, { status: 400 });
     }
 
-    // Make the request to the backend API
     const response = await fetch(`${baseUrl}/api/users/`, {
       method: 'POST',
       headers: {
@@ -30,7 +28,6 @@ export async function POST(request: NextRequest) {
     const textResponse = await response.text();
     console.log('Backend response:', textResponse, 'Status:', response.status);
 
-    // Handle errors from the backend API
     if (!response.ok) {
       try {
         const errorData = JSON.parse(textResponse);
@@ -39,6 +36,7 @@ export async function POST(request: NextRequest) {
           { status: response.status }
         );
       } catch (e) {
+        console.error('Error during signup:', e);
         return NextResponse.json(
           { error: 'Unexpected response format from backend' },
           { status: response.status }

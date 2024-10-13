@@ -7,6 +7,7 @@ import * as yup from "yup";
 import { useRouter } from "next/navigation";
 import { userSignup } from "../utils/userSignUp";  // Make sure this path is correct
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+import Image from "next/image"; 
 
 type UserData = {
   first_name: string;
@@ -74,9 +75,15 @@ const Signup = () => {
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100 font-josefin">
       <div className="flex w-full h-full">
-        <div className="w-1/2 flex flex-col justify-start items-start px-12 md:px-16">
+      <div className="w-1/2 flex flex-col justify-start items-start px-12 md:px-16">
           <h2 className="text-[20px] font-semibold text-black ml-28">Create an account</h2>
-          <img src="/images/logomamamind.png" alt="Logo" className="w-full h-auto mt-24 object-contain" />
+          <Image 
+            src="/images/logomamamind.png" 
+            alt="Logo" 
+            width={800} 
+            height={600} 
+            className="mt-36 object-contain"
+          />
         </div>
         <div className="w-1/2 h-full flex flex-col justify-center px-12 md:px-16">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

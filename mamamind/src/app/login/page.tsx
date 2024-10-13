@@ -11,7 +11,7 @@ import { userLogin } from "../utils/userLogin";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
-
+import Image from "next/image";
 
 const loginSchema = yup.object().shape({
   email: yup.string().email("Invalid email format").required("Email is required"),
@@ -53,9 +53,15 @@ const LoginPage = () => {
 
   return (
     <div className="flex flex-col sm:flex-row h-screen font-sans">
-    <div className="hidden sm:flex sm:w-1/2 items-center justify-center p-2 sm:p-4 md:p-6 lg:p-8 nest-hub:p-4 nest-hub-max:p-6">
-      <img src="/images/shield.png" alt="Login illustration" className="w-full h-auto max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg nest-hub:max-w-xs nest-hub-max:max-w-sm" />
-    </div>
+      <div className="hidden sm:flex sm:w-1/2 items-center justify-center p-2 sm:p-4 md:p-6 lg:p-8 nest-hub:p-4 nest-hub-max:p-6">
+        <Image
+          src="/images/shield.png"
+          alt="Login illustration"
+          width={400} 
+          height={400} 
+          className="w-full h-auto max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg nest-hub:max-w-xs nest-hub-max:max-w-sm"
+        />
+      </div>
   
     <div className="w-full sm:w-1/2 flex items-center justify-center bg-gray-100 p-4 sm:p-6 md:p-8 lg:p-10 nest-hub:p-6 nest-hub-max:p-8">
       <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg nest-hub:max-w-sm nest-hub-max:max-w-md">
