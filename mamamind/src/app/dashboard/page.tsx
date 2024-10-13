@@ -1,4 +1,4 @@
-import { PrevalenceCharts } from "@/app/graphs/page";
+import { PrevalenceCharts } from "../components/graphs";
 
 const Dashboard = () => {
   return (
