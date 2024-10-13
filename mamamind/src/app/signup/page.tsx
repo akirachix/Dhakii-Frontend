@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import { userSignup } from "../utils/userSignUp";  // Make sure this path is correct
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 
-// Define the type at the top of the file
 type UserData = {
   first_name: string;
   last_name: string;
@@ -19,7 +18,6 @@ type UserData = {
   username: string;
 };
 
-// Define validation schema using Yup
 const signupSchema = yup.object().shape({
   first_name: yup.string().required("First name is required"),
   last_name: yup.string().required("Last name is required"),
