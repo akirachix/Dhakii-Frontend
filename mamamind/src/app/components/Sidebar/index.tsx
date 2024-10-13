@@ -1,13 +1,14 @@
 
 'use client';
+import { usePathname } from 'next/navigation'; 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation'; 
 import { FaChartBar, FaUserCircle } from 'react-icons/fa';
 import { BsPeopleFill } from "react-icons/bs";
 import { FaPeopleLine, FaUserNurse } from "react-icons/fa6";
 import { PiHospitalFill } from "react-icons/pi";
 import Image from 'next/image'; 
+
 const Sidebar = () => {
   const pathname = usePathname(); 
   const [isMounted, setIsMounted] = useState(false);

@@ -1,8 +1,7 @@
 "use client";
 import React from "react";
 import Sidebar from "../components/Sidebar";
-// import MotherDetails from "../Singlemother/page";
-// import MothersDetails from "../Motherdetails/page";
+
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
