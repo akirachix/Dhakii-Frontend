@@ -11,6 +11,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="text-4xl">
         {children}
       </div>
+
     </div>
   );
 }
