@@ -1,11 +1,9 @@
-// Import necessary types
 import { NextOfKin as NextOfKinType } from './types'; 
 
 const baseURL = '/api/nextOfKin/';
 
 export const fetchNextOfKinByMotherId = async (motherId: number): Promise<NextOfKinType[]> => {
   try {
-    // Fetch all next of kin data from the backend
     const response = await fetch(`${baseURL}`, {
       method: 'GET',
       headers: {
@@ -17,11 +15,9 @@ export const fetchNextOfKinByMotherId = async (motherId: number): Promise<NextOf
       throw new Error(`Failed to fetch next of kin. Status: ${response.status} - ${response.statusText}`);
     }
 
-    // Parse the response as NextOfKinType[]
     const kinData = await response.json() as NextOfKinType[];
     console.log('Fetched all next of kin data:', kinData);
     
-    // Filter the next of kin by motherId on the client side
     const filteredKinData = kinData.filter(kin => kin.mother_id === motherId);
     console.log('Filtered next of kin data:', filteredKinData);
 

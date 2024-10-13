@@ -46,10 +46,9 @@ export const fetchMotherById = async (id: number): Promise<MotherType> => {
     console.log('Fetched mother data:', motherData);
     return motherData;
   } catch (error) {
-    // Ensure the error is of type Error
     const message = error instanceof Error ? error.message : String(error);
     console.error('Error fetching mother data:', message);
-    throw new Error(message); // Optional: Rethrow as a new Error
+    throw new Error(message); 
   }
 };
 

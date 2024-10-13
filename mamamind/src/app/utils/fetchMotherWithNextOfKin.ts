@@ -29,9 +29,8 @@ export const fetchMotherWithNextOfKin = async (id: number): Promise<{ mother: Mo
       throw new Error('Mother ID is undefined');
     }
 
-    const kinData = await fetchNextOfKinByMotherId(motherData.id); // Fetch next of kin by mother's ID
-
-    return { mother: motherData, nextOfKin: kinData.length > 0 ? kinData : null }; // Return null if no kin found
+    const kinData = await fetchNextOfKinByMotherId(motherData.id); 
+    return { mother: motherData, nextOfKin: kinData.length > 0 ? kinData : null }; 
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     console.error('Error fetching mother or next of kin data:', message);
