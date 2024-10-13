@@ -4,7 +4,7 @@ import { getCookie } from "cookies-next";
 export function middleware(req: Request) {
     const isloggedIn = getCookie('isLoggedIn' , {req});
     if (isloggedIn === 'true') {
-        return NextResponse.redirect(new URL ('/dashboard', req.url));
+        return NextResponse.redirect(new URL ('/graphs', req.url));
     }
     return NextResponse.next();
 }

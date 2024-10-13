@@ -33,12 +33,10 @@ const LoginPage = () => {
       const response = await userLogin(data.email, data.password);
       const { token, userId } = response;
 
-      // Set cookies for authentication
       setCookie(null, 'authToken', token, { maxAge: 60 * 60 * 24 * 7, path: '/' });
       setCookie(null, 'userId', userId, { maxAge: 60 * 60 * 24 * 7, path: '/' });
 
-      // Redirect to dashboard
-      router.push('/dashboard');
+      router.push('/graphs');
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : 'An unexpected error occurred');
     }
