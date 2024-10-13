@@ -36,7 +36,7 @@ const LoginPage = () => {
       setCookie(null, 'authToken', token, { maxAge: 60 * 60 * 24 * 7, path: '/' });
       setCookie(null, 'userId', userId, { maxAge: 60 * 60 * 24 * 7, path: '/' });
 
-      router.push('/');
+      router.push('/dashboard');
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : 'An unexpected error occurred');
     }
