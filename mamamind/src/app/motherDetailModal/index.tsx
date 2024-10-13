@@ -31,28 +31,28 @@ const MotherDetailsModal: React.FC<MotherDetailsModalProps> = ({ mother, nextOfK
             <h3 className="text-xl font-semibold mb-2">Mother&apos;s Information</h3>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className="text-sm text-gray-500">Full Name</p>
-                <p className="font-medium">{mother.first_name} {mother.last_name}</p>
+                <p className="text-base text-gray-500">Full Name</p>
+                <p className="text-2xl">{mother.first_name} {mother.last_name}</p>
               </div>
               <div>
                 <p className="text-sm text-gray-500">Village</p>
-                <p className="font-medium">{mother.village}</p>
+                <p className="text-2xl">{mother.village}</p>
               </div>
               <div>
                 <p className="text-sm text-gray-500">Marital Status</p>
-                <p className="font-medium">{mother.marital_status}</p>
+                <p className="text-2xl">{mother.marital_status}</p>
               </div>
               <div>
                 <p className="text-sm text-gray-500">Phone Number</p>
-                <p className="font-medium">{mother.tel_no}</p>
+                <p className="text-2xl">{mother.tel_no}</p>
               </div>
               <div>
                 <p className="text-sm text-gray-500">Number of Children</p>
-                <p className="font-medium">{mother.no_of_children}</p>
+                <p className="text-2xl">{mother.no_of_children}</p>
               </div>
               <div>
                 <p className="text-sm text-gray-500">Registration Date</p>
-                <p className="font-medium">{formattedDate}</p>
+                <p className="text-2xl">{formattedDate}</p>
               </div>
             </div>
           </div>

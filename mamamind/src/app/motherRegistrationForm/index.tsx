@@ -131,7 +131,7 @@ const MotherRegistrationForm: React.FC<MotherRegistrationFormProps> = ({ onSave,
   );
 
   return (
-    <div className="modal-overlay fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="modal-overlay fixed top-0 left-0 w-full h-full bg-black bg-opacity-50  text-xl flex items-center justify-center z-50">
       <div className="modal-container bg-white p-5 rounded-lg shadow-lg w-full max-w-2xl md:max-w-3xl lg:max-w-4xl">
         <h2 className="text-xl font-bold mb-4 text-teal-500">Mother Details</h2>
         <form onSubmit={step === 1 ? handleContinue : handleSave}>
@@ -158,8 +158,8 @@ const MotherRegistrationForm: React.FC<MotherRegistrationFormProps> = ({ onSave,
           </div>
           {errors.api && <span className="text-red-500">{errors.api}</span>}
           <div className="mt-4 flex justify-between">
-            <button type="button" onClick={handleCancel} className="px-4 py-2 bg-red-500 text-white rounded">Cancel</button>
-            <button type="submit" disabled={isLoading} className="px-4 py-2 bg-teal-500 text-white rounded">{step === 1 ? 'Continue' : 'Save'}</button>
+            <button type="button" onClick={handleCancel} className="px-4 py-2 bg-red-500  text-xl text-white rounded">Cancel</button>
+            <button type="submit" disabled={isLoading} className="px-4 py-2 bg-teal-500  text-xl text-white rounded">{step === 1 ? 'Continue' : 'Save'}</button>
           </div>
         </form>
       </div>
