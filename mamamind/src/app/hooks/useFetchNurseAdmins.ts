@@ -12,7 +12,7 @@ interface NurseAdmin {
     location: string;
     created_at: string;
     sub_location: string;
-    user: number; // This is referencing the user who is the nurse admin
+    user: number; 
   }
 
 export const useFetchNurseAdmins = () => {
