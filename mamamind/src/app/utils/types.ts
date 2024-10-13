@@ -1,16 +1,16 @@
 
 export interface Mother {
-  nextOfKinId: any;
+  nextOfKinId?: number;
   id?: number; 
-  first_name?: string;
-  last_name?: string;
-  date_of_birth?: string;
-  no_of_children?: number; 
-  date_of_reg?: string;
-  tel_no?: string;
-  marital_status?: string;
-  sub_location?: string;
-  village?: string;
+  first_name: string;
+  last_name: string;
+  date_of_birth: string;
+  no_of_children: number; 
+  date_of_reg: string;
+  tel_no: string;
+  marital_status: string;
+  sub_location: string;
+  village: string;
 }
   
 
@@ -36,6 +36,8 @@ export interface NextOfKin {
     error: string;
   }
   export interface MotherDetails {
+  nextOfKinId?: number;
+
   id?: number; 
   first_name: string;
   last_name: string;
