@@ -37,11 +37,7 @@ const NurseList = () => {
     setCurrentPage(1);
   };
 
-  const handleClearSearch = () => {
-    setSearchQuery("");
-    setFilteredNurses(nurses); // Resetting the list to show all nurses again
-    setCurrentPage(1);
-  };
+
 
   const handleNurseClick = (nurse: Nurse) => {
     setSelectedNurse(nurse);

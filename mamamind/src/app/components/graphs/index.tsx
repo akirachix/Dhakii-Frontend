@@ -4,7 +4,7 @@ import { Bar } from 'react-chartjs-2';
 import { usePpdPrevalence } from "@/app/hooks/getPpdPrevalence";
 import { getMothersStatistics } from '@/app/utils/motherStatistics';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
-import Sidebar from '@/app/components/Sidebar';  // Import Sidebar component
+
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 export const PrevalenceCharts: React.FC = () => {
   const { ppdMothers, data, loading, error } = usePpdPrevalence();

@@ -1,5 +1,4 @@
 "use client";
-import { PrevalenceCharts } from "./components/graphs";
 import LoginPage from "./login/page";
 
  
