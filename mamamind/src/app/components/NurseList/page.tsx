@@ -84,15 +84,23 @@ const NurseList = () => {
           </div>
 
           {/* Search */}
-          <div className="mb-6">
-            <input
-              type="text"
-              placeholder="Search for a nurse"
-              value={searchQuery}
-              onChange={handleSearch}
-              className="w-full px-4 py-2 outline-none text-gray-700 placeholder-gray-400 rounded-lg shadow-md text-sm"
-            />
-          </div>
+      {/* Add a button to clear the search */}
+<div className="mb-6 flex space-x-2">
+  <input
+    type="text"
+    placeholder="Search for a nurse"
+    value={searchQuery}
+    onChange={handleSearch}
+    className="w-full px-4 py-2 outline-none text-gray-700 placeholder-gray-400 rounded-lg shadow-md text-sm"
+  />
+  <button
+    onClick={handleClearSearch}
+    className="bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-2 px-4 rounded-lg shadow-md text-sm"
+  >
+    Clear
+  </button>
+</div>
+
 
           {/* Nurse Table */}
           <div className="bg-white rounded-lg shadow-lg overflow-hidden">

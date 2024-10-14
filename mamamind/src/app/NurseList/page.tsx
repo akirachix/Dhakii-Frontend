@@ -39,7 +39,7 @@ const NurseList = () => {
 
   const handleClearSearch = () => {
     setSearchQuery("");
-    setFilteredNurses(nurses);
+    setFilteredNurses(nurses); // Resetting the list to show all nurses again
     setCurrentPage(1);
   };
 
@@ -81,10 +81,16 @@ const NurseList = () => {
                 placeholder="Search for a Nurse"
                 className="bg-white border-2 border-gray-400 rounded-2xl pl-10 pr-4 py-3 shadow-md w-full focus:outline-none focus:ring-2 focus:ring-gray-500"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={handleSearch}
               />
               <span className="absolute left-3 top-3 text-gray-400">🔍</span>
             </div>
+            <button
+              onClick={handleClearSearch} // Make sure this button calls handleClearSearch
+              className="bg-gray-500 text-white font-bold py-3 px-6 rounded-lg shadow-md"
+            >
+              Clear Search
+            </button>
             <button
               onClick={() => setShowModal(true)}
               className="bg-[#F18721] hover:bg-[#E16701] text-white font-bold py-3 px-6 rounded-lg shadow-md"
