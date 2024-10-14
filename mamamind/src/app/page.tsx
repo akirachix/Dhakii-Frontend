@@ -1,14 +1,16 @@
 
-"use client";
 
-import { PrevalenceCharts } from "./components/graphs";
+"use client";
+import LoginPage from "./login/page";
+
+ 
 
 
 export default function Home() {
-  return (
 
+  return (
     <div>
-      <PrevalenceCharts/>
+<LoginPage/>
     </div>
 
   );
