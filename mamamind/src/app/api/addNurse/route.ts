@@ -24,10 +24,12 @@ export async function POST(req: Request) {
     const userData = {
       username: nurseData.username,
       email: nurseData.email,
-      password: nurseData.password,  
-      phone_number: nurseData.phone_number  
+      password: nurseData.password,
+      phone_number: nurseData.phone_number,
+      first_name: nurseData.first_name, 
+      last_name: nurseData.last_name     
     };
-    
+
     const userResponse = await fetch(`${baseUrl}/api/users/`, {
       method: "POST",
       headers: {
@@ -49,6 +51,7 @@ export async function POST(req: Request) {
     const createdUser = await userResponse.json();
     console.log("User created successfully:", createdUser);
 
+    // Use the createdUser ID for nurse creation
     const nursePayload = {
       ...nurseData,
       user: createdUser.id, 

@@ -8,10 +8,15 @@ import LoginPage from "./login/page";
 export default function Home() {
 
   return (
-    <div>
-      <PrevalenceCharts />
+  <div>
 <LoginPage/>
     </div>
 
   );
 }
+
+
+
+
+
+

@@ -47,7 +47,7 @@ const Sidebar = () => {
       </div>
       <nav className="flex-1 px-2 py-8 space-y-16 mt-10">
         <SidebarItem Icon={FaChartBar} label="Dashboard" path="/dashboard" />
-        <SidebarItem Icon={BsPeopleFill} label="Mothers' Details" path="/mothers-details" />
+        <SidebarItem Icon={BsPeopleFill} label="Mothers' Details" path="/mothersDetails" />
         <SidebarItem Icon={RiTeamFill} label="CHPs' Details" path="/chps" />
         <SidebarItem Icon={FaUserNurse} label="Nurses" path="/NurseList" />
         <SidebarItem Icon={PiHospitalFill} label="Nurse Admin" path="/nurse-admin" />

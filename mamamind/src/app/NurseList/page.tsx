@@ -85,12 +85,7 @@ const NurseList = () => {
               />
               <span className="absolute left-3 top-3 text-gray-400">🔍</span>
             </div>
-            <button
-              onClick={handleClearSearch} // Make sure this button calls handleClearSearch
-              className="bg-gray-500 text-white font-bold py-3 px-6 rounded-lg shadow-md"
-            >
-              Clear Search
-            </button>
+         
             <button
               onClick={() => setShowModal(true)}
               className="bg-[#F18721] hover:bg-[#E16701] text-white font-bold py-3 px-6 rounded-lg shadow-md"
