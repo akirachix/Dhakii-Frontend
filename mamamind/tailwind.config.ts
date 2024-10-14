@@ -16,8 +16,11 @@ module.exports = {
         nunito: ['Nunito', 'sans-serif'],
       },
       screens: {
+        'next-hub': '1024px',  
+        'next-hub-max': '1280px',
         'nest-hub': { 'min': '1024px', 'max': '600px' },
         'nest-hub-max': { 'min': '1280px', 'max': '800px' },
+     
       },
     },
   },
