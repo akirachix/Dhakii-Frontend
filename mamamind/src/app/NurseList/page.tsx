@@ -1,12 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useNurses } from "@/app/hooks/useNurses";
-import NurseRegistrationForm from "@/app/components/NurseRegistration"; 
-import NurseDetailsModal from "@/app/components/NurseDetails"; 
+import NurseRegistrationForm from "@/app/components/NurseRegistration";
+import NurseDetailsModal from "@/app/components/NurseDetails";
 import { Nurse } from "@/app/utils/types";
+import Sidebar from "../components/Sidebar";
 
 const NurseList = () => {
-  const { nurses, loading, error, currentPage, setCurrentPage, totalPages } = useNurses();
+  const { nurses, loading, error, currentPage, setCurrentPage, totalPages } =
+    useNurses();
 
   const [filteredNurses, setFilteredNurses] = useState<Nurse[]>([]);
   const [showModal, setShowModal] = useState(false);
@@ -32,7 +34,7 @@ const NurseList = () => {
         .includes(query)
     );
     setFilteredNurses(filtered);
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
   const handleClearSearch = () => {
@@ -53,18 +55,24 @@ const NurseList = () => {
   };
 
   if (loading) {
-    return <p className="text-center text-gray-500 text-lg">Loading nurses...</p>;
+    return (
+      <p className="text-center text-gray-500 text-lg">Loading nurses...</p>
+    );
   }
 
   if (error) {
-    return <p className="text-red-500 text-center">Error fetching nurses: {error}</p>;
+    return (
+      <p className="text-red-500 text-center">Error fetching nurses: {error}</p>
+    );
   }
 
   return (
     <div className="p-6 next-hub:p-10 next-hub-max:p-12 font-nunito bg-gray-50">
-      {/* Header */}
+      <Sidebar />
       <div className="flex flex-col lg:flex-row justify-between items-center mb-6">
-        <h1 className="text-3xl lg:text-4xl font-bold text-gray-800">List of Nurses</h1>
+        <h1 className="text-3xl lg:text-4xl font-bold text-gray-800">
+          List of Nurses
+        </h1>
         <button
           onClick={() => setShowModal(true)}
           className="bg-[#F18721] hover:bg-[#E16701] text-white font-bold py-3 px-6 rounded-lg shadow-md mt-4 lg:mt-0 text-lg lg:text-xl"
@@ -113,7 +121,9 @@ const NurseList = () => {
                 >
                   <td className="py-4 px-6 text-center">{nurse.firstname}</td>
                   <td className="py-4 px-6 text-center">{nurse.lastname}</td>
-                  <td className="py-4 px-6 text-center">{nurse.sub_location}</td>
+                  <td className="py-4 px-6 text-center">
+                    {nurse.sub_location}
+                  </td>
                   <td className="py-4 px-6 text-center">{nurse.reg_no}</td>
                 </tr>
               ))}
@@ -131,7 +141,9 @@ const NurseList = () => {
             key={page}
             onClick={() => setCurrentPage(page)}
             className={`px-2 py-1 md:px-4 md:py-2 mx-1 rounded-lg text-lg lg:text-xl ${
-              currentPage === page ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"
+              currentPage === page
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 text-gray-800"
             }`}
           >
             {page}
