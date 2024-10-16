@@ -3,23 +3,8 @@
 import { Mother } from "./types";
 
 export const addMother = async (data: Mother): Promise<Mother> => {
-  if (
-    !data.first_name ||
-    !data.last_name ||
-    !data.date_of_birth ||
-    !data.tel_no ||
-    !data.marital_status ||
-    data.no_of_children === undefined ||
-    !data.village ||
-    !data.sub_location
-  ) {
-    throw new Error('All fields are required to add a mother.');
-  }
-
-  console.log('Sending mother data:', data);
-
   try {
-    const response = await fetch('/api/addmother', {
+    const response = await fetch('/api/addmother', { // Proxy to the Next.js route
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -28,19 +13,25 @@ export const addMother = async (data: Mother): Promise<Mother> => {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to add mother. Status: ${response.status} - ${response.statusText}`);
+      const errorText = await response.text();
+      throw new Error(`Failed to add mother. Status: ${response.status} - ${errorText}`);
     }
 
-    const newMother: Mother = await response.json();
+    const newMother: Mother = await response.json(); // Expecting the response from the backend API
     console.log('Added mother data:', newMother);
-    return newMother;
-  } catch (error: unknown) { 
-    console.error('Error adding mother data:', error);
     
+    // Ensure the backend returned a valid mother with an ID
+    if (!newMother.id) {
+      throw new Error('The server did not return a valid mother ID');
+    }
+
+    return newMother; // Return the mother object with ID
+  } catch (error: unknown) {
+    console.error('Error adding mother:', error);
     if (error instanceof Error) {
-      throw new Error(error.message); 
+      throw new Error(error.message);
     } else {
-      throw new Error('An unknown error occurred while adding mother.'); 
+      throw new Error('An unknown error occurred while adding mother.');
     }
   }
 };

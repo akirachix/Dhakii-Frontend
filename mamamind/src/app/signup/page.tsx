@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useRouter } from "next/navigation";
-import { userSignup } from "../utils/userSignUp";  // Make sure this path is correct
+import { userSignup } from "../utils/userSignUp";  
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import Image from "next/image"; 
 
