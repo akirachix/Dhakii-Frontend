@@ -1,46 +1,49 @@
-"use client"
+
+
 import { useState, useEffect } from 'react';
 import { fetchPrevalenceData } from '../utils/fetchPrevalence';
-import { Mother } from '../types/mothers';
+import { Mother } from '../types/mothers'; // Import the existing Mother interface
+
+interface PrevalenceData {
+  mother: Mother | null;
+  total_score: number;
+}
 
 export const usePpdPrevalence = () => {
-  const [data, setData] = useState<Mother[]>([]);
+  const [data, setData] = useState<PrevalenceData[]>([]);
+  const [ppdMothers, setPpdMothers] = useState<PrevalenceData[]>([]);
+  const [villageCounts, setVillageCounts] = useState<Record<string, number>>({});
+  const [ageGroups, setAgeGroups] = useState<Record<string, number>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [ppdMothers, setPpdMothers] = useState<Mother[]>([]);
 
   useEffect(() => {
     const getData = async () => {
-      setLoading(true); 
-      setError(null); 
+      setLoading(true);
+      setError(null);
       try {
-        const result = await fetchPrevalenceData();
-        console.log('Fetched data:', result);
+        const { combinedData, villageCounts, ageGroupCounts } = await fetchPrevalenceData();
+        setData(combinedData);
 
-        if (Array.isArray(result)) {
-          setData(result);
+        // Filter mothers with PPD (score > 10)
+        const mothersWithPpd = combinedData.filter((item) => item.total_score > 10);
+        setPpdMothers(mothersWithPpd);
 
-          const mothersWithPpd = result.filter((item) => item.total_score > 10);
-          console.log('Mothers with PPD (score > 10):', mothersWithPpd);
+        // Set village counts
+        setVillageCounts(villageCounts);
 
-          setPpdMothers(mothersWithPpd);
-        } else {
-          setError('Data is not in the expected format (array).');
-          console.error('Unexpected data format:', result);
-        }
+        // Set age group counts
+        setAgeGroups(ageGroupCounts);
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred.';
         setError(`An error occurred while fetching data: ${errorMessage}`);
-        console.error('Error fetching data:', err);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
-    getData(); 
+    getData();
   }, []);
 
-  return { data, ppdMothers, loading, error };
+  return { data, ppdMothers, villageCounts, ageGroups, loading, error };
 };
-
-

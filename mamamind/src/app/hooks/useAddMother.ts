@@ -1,18 +1,19 @@
 
-
 import { useState } from 'react';
-import { addMother } from '@/app/utils/addMother'; 
+import { addMother } from '@/app/utils/addMother';
 import { Mother } from '@/app/utils/types';
 
 export const useAddMother = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleAddMother = async (motherData: Mother) => {
+  const handleAddMother = async (motherData: Mother): Promise<Mother | null> => {
     setLoading(true);
-    setError(null); 
+    setError(null);
+
     try {
-      await addMother(motherData); 
+      const savedMother = await addMother(motherData); // Call addMother and expect a Mother object
+      return savedMother; // Return the saved Mother object
     } catch (err) {
       console.error('Error adding mother:', err);
       if (err instanceof Error) {
@@ -20,6 +21,7 @@ export const useAddMother = () => {
       } else {
         setError('Failed to add mother');
       }
+      return null; // Return null in case of error
     } finally {
       setLoading(false);
     }
@@ -27,3 +29,4 @@ export const useAddMother = () => {
 
   return { handleAddMother, loading, error };
 };
+

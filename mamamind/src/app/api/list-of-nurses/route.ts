@@ -1,7 +1,7 @@
 import { Nurse } from "@/app/utils/types";
-import { NextResponse } from 'next/server'; // Import necessary Next.js server functions
+import { NextResponse } from 'next/server'; 
 
-// const fetchNursesUrl = "https://mamamind-db02af72f48f.herokuapp.com/api/nurses/";
+
 const fetchNursesUrl = process.env.BASE_URL;
 
 export async function GET(request: Request) {
@@ -25,10 +25,8 @@ export async function GET(request: Request) {
 
     const data = await response.json();
 
-    // Log the response to check if `results` exists
     console.log("API Response:", data);
 
-    // Ensure `data.results` exists and is an array
     if (!data.results || !Array.isArray(data.results)) {
       return NextResponse.json(
         { message: "Invalid API response structure: expected `results` to be an array" },
@@ -36,7 +34,6 @@ export async function GET(request: Request) {
       );
     }
 
-    // Return the mapped nurses and totalPages
     return NextResponse.json({
       nurses: data.results.map((nurse: Nurse) => ({
         firstname: nurse.firstname || "Unknown",
@@ -44,7 +41,7 @@ export async function GET(request: Request) {
         sub_location: nurse.sub_location || "",
         reg_no: nurse.reg_no || "",
       })),
-      totalPages: data.total_pages || 1, // Ensure the totalPages is returned from the API
+      totalPages: data.total_pages || 1, 
     });
 
   } catch (error) {

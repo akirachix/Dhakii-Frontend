@@ -1,5 +1,4 @@
 
- 
 
 import { NextResponse } from 'next/server';
 
@@ -9,6 +8,7 @@ export async function POST(request: Request) {
   try {
     const motherData = await request.json();
 
+    // Forward the request to the actual backend API
     const response = await fetch(`${baseURL}/api/mothers/`, {
       method: 'POST',
       headers: {
@@ -22,12 +22,15 @@ export async function POST(request: Request) {
       throw new Error(`Failed to add mother: ${errorDetails}`);
     }
 
-    const contentType = response.headers.get('Content-Type') || '';
-    if (!contentType.includes('application/json')) {
-      throw new Error('Invalid response from server');
+    // Get the newly created mother data
+    const newMother = await response.json();
+
+    // Ensure the mother data contains an ID
+    if (!newMother.id) {
+      throw new Error('The backend did not return a valid mother ID');
     }
 
-    const newMother = await response.json();
+    // Return the new mother object back to the front-end
     return NextResponse.json(newMother, { status: 201 });
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -39,3 +42,5 @@ export async function POST(request: Request) {
     }
   }
 }
+
+

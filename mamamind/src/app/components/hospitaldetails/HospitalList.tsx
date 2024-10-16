@@ -1,3 +1,5 @@
+
+
 'use client';
 
 import React, { useState } from 'react';
@@ -42,7 +44,7 @@ export const HospitalList: React.FC<HospitalListProps> = ({
   };
 
   return (
-    <div className="mt-8 mx-4">
+    <div className="mt-8 mx-2 lg:mx-4"> {/* Adjust the horizontal margin */}
       {loading ? (
         <p className="text-center text-gray-500 text-lg">Loading hospital list...</p>
       ) : hospitals.length === 0 && searchQuery.length > 0 ? (
@@ -52,13 +54,13 @@ export const HospitalList: React.FC<HospitalListProps> = ({
           <table className="min-w-full bg-white border-collapse shadow-lg rounded-lg">
             <thead>
               <tr className="bg-gray-100 text-black uppercase text-sm leading-normal font-bold font-nunito">
-                <th className="py-4 px-4  md:px-8 lg:px-28 text-left border-b-2 border-gray-300 text-lg">
+                <th className="py-4 px-4 md:px-6 lg:px-16 text-left border-b-2 border-gray-300 text-lg">
                   Hospital Name
                 </th>
-                <th className="py-4 px-4 md:px-8 lg:px-28 text-left border-b-2 border-gray-300 text-lg">
+                <th className="py-4 px-4 md:px-6 lg:px-16 text-left border-b-2 border-gray-300 text-lg">
                   Type
                 </th>
-                <th className="py-4 px-4 md:px-8 lg:px-28 text-left border-b-2 border-gray-300 text-lg">
+                <th className="py-4 px-4 md:px-6 lg:px-16 text-left border-b-2 border-gray-300 text-lg">
                   Village
                 </th>
               </tr>
@@ -72,9 +74,9 @@ export const HospitalList: React.FC<HospitalListProps> = ({
                   }`}
                   onClick={() => handleRowClick(hospital)}
                 >
-                  <td className="py-4 px-4 md:px-8 lg:px-28 text-left">{hospital.name}</td>
-                  <td className="py-4 px-4 md:px-8 lg:px-28 text-left">{hospital.type}</td>
-                  <td className="py-4 px-4 md:px-8 lg:px-28 text-left">{hospital.village}</td>
+                  <td className="py-4 px-4 md:px-6 lg:px-16 text-left whitespace-nowrap">{hospital.name}</td>
+                  <td className="py-4 px-4 md:px-6 lg:px-16 text-left whitespace-nowrap">{hospital.type}</td>
+                  <td className="py-4 px-4 md:px-6 lg:px-16 text-left whitespace-nowrap">{hospital.village}</td>
                 </tr>
               ))}
             </tbody>

@@ -13,6 +13,14 @@ export async function POST(req: Request) {
     const nurseData = await req.json();
     console.log("Received nurse data:", nurseData);
 
+    if (!nurseData.firstname || !nurseData.lastname) {
+      console.error("First name and last name are required.");
+      return NextResponse.json(
+        { error: "First name and last name are required" },
+        { status: 400 }
+      );
+    }
+
     if (!baseUrl) {
       console.error("BASE_URL is not defined in environment variables");
       return NextResponse.json(
@@ -21,13 +29,14 @@ export async function POST(req: Request) {
       );
     }
 
+
     const userData = {
       username: nurseData.username,
       email: nurseData.email,
       password: nurseData.password,
       phone_number: nurseData.phone_number,
-      first_name: nurseData.first_name, 
-      last_name: nurseData.last_name     
+      first_name: nurseData.firstname,  
+      last_name: nurseData.lastname     
     };
 
     const userResponse = await fetch(`${baseUrl}/api/users/`, {
@@ -51,10 +60,10 @@ export async function POST(req: Request) {
     const createdUser = await userResponse.json();
     console.log("User created successfully:", createdUser);
 
-    // Use the createdUser ID for nurse creation
     const nursePayload = {
       ...nurseData,
-      user: createdUser.id, 
+      user: createdUser.id,
+      hospital_id: nurseData.hospital_id,  
     };
 
     const nurseResponse = await fetch(`${baseUrl}/api/nurses/`, {
@@ -63,7 +72,7 @@ export async function POST(req: Request) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(nursePayload),
-      signal: controller.signal, 
+      signal: controller.signal,
     });
 
     clearTimeout(timeout);
@@ -83,7 +92,7 @@ export async function POST(req: Request) {
 
   } catch (error) {
     console.error("Detailed error:", error);
-    
+
     if ((error as Error).name === "AbortError") {
       console.error("Fetch aborted due to timeout");
       return NextResponse.json(
