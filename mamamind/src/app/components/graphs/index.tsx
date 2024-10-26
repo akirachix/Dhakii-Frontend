@@ -16,15 +16,14 @@ export const PrevalenceCharts: React.FC = () => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
-  // Village data for the chart
   const villageLabels = Object.keys(villageCounts).slice(0, 8);
   const villageData = Object.values(villageCounts).slice(0, 8);
 
-  // Convert ageGroups object to labels and data arrays for the chart
-  const ageGroupLabels = Object.keys(ageGroups); // e.g., ['10-19', '20-29', '30-39']
-  const ageGroupData = Object.values(ageGroups); // e.g., [4, 7, 3]
 
-  // Overall data (With PPD and Without PPD)
+  const ageGroupLabels = Object.keys(ageGroups);
+  const ageGroupData = Object.values(ageGroups); 
+
+  
   const withoutPpd = data.filter((mother) => mother.total_score <= 10).length;
   const withPpd = ppdMothers.length;
 
@@ -51,11 +50,11 @@ export const PrevalenceCharts: React.FC = () => {
   };
 
   const agePPDData = {
-    labels: ageGroupLabels, // Age group labels (e.g., ['10-19', '20-29'])
+    labels: ageGroupLabels, 
     datasets: [
       {
         label: 'Number of Mothers by Age Group',
-        data: ageGroupData, // Age group data (e.g., [4, 7, 3])
+        data: ageGroupData,
         backgroundColor: '#02A6A6',
       },
     ],
@@ -121,10 +120,10 @@ export const PrevalenceCharts: React.FC = () => {
           font: {
             size: 14,
           },
-          // Limit label rotation
-          maxRotation: 45, // Adjust this as needed to control the rotation of labels
+         
+          maxRotation: 45, 
           minRotation: 0,
-          autoSkip: false, // Ensure all labels are shown, even if there are many
+          autoSkip: false, 
         },
       },
       y: {
@@ -188,42 +187,42 @@ export const PrevalenceCharts: React.FC = () => {
   return (
     <div className="flex">
       <div className="flex-1 p-4 ml-72 nest-hub:ml-48 nest-hub-max:ml-48 nest-hub:static">
-        <h2 className="text-2xl mt-2 font-semibold text-center">
+        <h2 className="text-2xl mt-0 font-semibold text-center">
           Prevalence of Postpartum Depression Among Mothers
         </h2>
   
         <div className="grid grid-cols-1 gap-32 lg:grid-cols-2 nest-hub:flex nest-hub:flex-col nest-hub:gap-8 nest-hub-max:flex nest-hub-max:flex-col nest-hub-max:gap-8">
           
-          {/* Overall Prevalence of PPD */}
-          <div className="bg-white p-2 rounded-lg shadow-md flex flex-col lg:w-auto lg:h-[400px] nest-hub:w-full nest-hub:h-[400px] nest-hub-max:w-full nest-hub-max:h-[400px]">
+         
+          <div className="bg-white p-2 rounded-lg shadow-md flex flex-col lg:w-auto lg:h-[430px] nest-hub:w-full nest-hub:h-[400px] nest-hub-max:w-full nest-hub-max:h-[400px]">
             <h3 className="text-lg font-medium">Overall Prevalence of PPD</h3>
-            <div className="w-full min-h-[330px] flex-1">
+            <div className="w-full min-h-[340px] flex-1">
               <Bar data={overallPPDData} options={{ ...overallChartOptions, maintainAspectRatio: false }} />
             </div>
-            <p className="text-[16px] text-gray-600 mt-2">
+            <p className="text-[16px] text-gray-600 mt-0">
               This chart shows the overall number of mothers affected by Postpartum Depression (PPD).
             </p>
           </div>
   
-          {/* Prevalence of PPD by Villages */}
-          <div className="bg-white p-4 rounded-lg shadow-md flex-1 flex flex-col lg:w-auto lg:h-[400px] nest-hub:w-full nest-hub:h-[400px] nest-hub-max:w-full nest-hub-max:h-[400px]">
+          
+          <div className="bg-white p-4 rounded-lg shadow-md flex-1 flex flex-col lg:w-auto lg:h-[430px] nest-hub:w-full nest-hub:h-[400px] nest-hub-max:w-full nest-hub-max:h-[400px]">
             <h3 className="text-lg font-medium mb-2">Prevalence of PPD by Villages</h3>
             <div className="w-full min-h-[330px] flex-1">
               <Bar data={villagePPDData} options={{ ...villageChartOptions, maintainAspectRatio: false }} />
             </div>
-            <p className="text-[16px] text-gray-600 mt-2">
+            <p className="text-[16px] text-gray-600 mt-0">
               This chart depicts the number of mothers affected by PPD in various villages.
             </p>
           </div>
         </div>
   
-        {/* Prevalence of PPD by Age Group */}
-        <div className="bg-white p-4 rounded-lg shadow-md mt-6 mx-auto w-full lg:w-1/2 lg:h-[400px] nest-hub:w-full nest-hub:h-[400px] nest-hub-max:w-full nest-hub-max:h-[400px]">
+      
+        <div className="bg-white p-4 rounded-lg shadow-md mt-6 mx-auto w-full lg:w-1/2 lg:h-[420px] nest-hub:w-full nest-hub:h-[400px] nest-hub-max:w-full nest-hub-max:h-[400px]">
           <h3 className="text-lg font-medium mb-2">Prevalence of PPD by Age Group</h3>
           <div className="w-full min-h-[330px]">
             <Bar data={agePPDData} options={{ ...ageChartOptions, maintainAspectRatio: false }} />
           </div>
-          <p className="text-[16px] text-gray-600 mt-2">
+          <p className="text-[16px] text-gray-600 mb-36">
             This chart illustrates the prevalence of PPD among different age groups of mothers.
           </p>
         </div>
@@ -231,3 +230,6 @@ export const PrevalenceCharts: React.FC = () => {
     </div>
   );
 };
+
+
+

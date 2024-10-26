@@ -5,6 +5,8 @@ import { fetchPrevalenceData } from '../utils/fetchPrevalence';
 import { Mother } from '../types/mothers'; // Import the existing Mother interface
 
 interface PrevalenceData {
+  village: any;
+  ageGroup: any;
   mother: Mother | null;
   total_score: number;
 }
@@ -47,3 +49,36 @@ export const usePpdPrevalence = () => {
 
   return { data, ppdMothers, villageCounts, ageGroups, loading, error };
 };
+
+
+// import { useEffect, useState } from "react";
+// import { Mother } from "@/app/types/mothers";
+// import { getMothersStatistics } from "@/app/utils/motherStatistics";
+
+// export const usePpdPrevalence = () => {
+//   const [data, setData] = useState<Mother[]>([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState<string | null>(null);
+
+//   const fetchMothersData = async () => {
+//     try {
+//       const response = await fetch('/api/mothers'); // API endpoint to fetch mothers
+//       const json = await response.json();
+//       setData(json);
+//     } catch (err) {
+//       setError("Failed to load data");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchMothersData();
+//   }, []);
+
+//   const ppdMothers = data.filter((mother) => mother.total_score > 10);
+
+//   const { villageCounts, ageGroups } = getMothersStatistics(ppdMothers);
+
+//   return { ppdMothers, villageCounts, ageGroups, data, loading, error };
+// };
