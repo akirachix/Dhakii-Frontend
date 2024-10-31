@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;  // Use the environment variable
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;  
   try {
     const { email, username, first_name, last_name, phone_number, user_role, password } = await request.json();
 

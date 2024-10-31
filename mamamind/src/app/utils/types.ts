@@ -1,4 +1,5 @@
 export interface NurseData {
+  location: string;
   username: string;
   email: string;
   firstname: string;  // Keep as firstname for backend consistency

@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { fetchMotherById } from '../utils/fetchMotherbyId';
+import { fetchMotherById } from '../utils/fetchMotherById';
 import { Mother } from '@/app/utils/types'; 
 
 export const useFetchMotherById = () => {

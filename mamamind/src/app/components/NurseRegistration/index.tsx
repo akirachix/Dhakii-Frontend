@@ -1,30 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { NurseData } from "@/app/utils/types";
 import { addNurse } from "@/app/utils/addNurse";
 
 interface NurseRegistrationFormProps {
   isOpen: boolean;
   onClose: () => void;
-  onAddNurse: (nurseData: NurseData) => void;
+  onAddNurse: (nurseData: NurseFormData) => void;
 }
 
-const hospitals = [
-  { id: 1, name: "MamaLucy" },
-  { id: 2, name: "Kenyatta Hospital" },
-  { id: 3, name: "Nairobi West" }
+type NurseFormData = {
+  username: string;
+  email: string;
+  password: string;
+  firstname: string;
+  lastname: string;
+  reg_no: string;
+  sub_location: string;
+  hospital: string;
+  phone_number: string;
+  gender: string;
+};
+
+interface Hospital {
+  id: number;
+  name: string;
+}
+
+interface Location {
+  location: string;
+  sub_location: string;
+  village: string;
+}
+
+const ALLOWED_LOCATIONS = [
+  { location: "Nairobi", sub_location: "Kibera", village: "Soweto East" },
+  { location: "Nairobi", sub_location: "Mathare", village: "Mathare 4A" },
+  { location: "Nairobi", sub_location: "Kibera", village: "Laini Saba" },
+  { location: "Nairobi", sub_location: "Korogocho", village: "Highridge" },
+  { location: "Nairobi", sub_location: "Kayole", village: "Soweto" },
+  { location: "Nairobi", sub_location: "Dandora", village: "Phase 4" },
+  { location: "Nairobi", sub_location: "Mukuru", village: "Mukuru Kwa Reuben" },
+  { location: "Nairobi", sub_location: "Huruma", village: "Ngei 1" },
+  { location: "Nairobi", sub_location: "Kawangware", village: "Stage 2" },
+  { location: "Nairobi", sub_location: "Kamukunji", village: "Majengo" },
 ];
 
 const phoneRegExp = /^(\+254|0)[1-9]\d{8}$/;
 
-const nurseSchema = Yup.object().shape({
+const nurseSchema = Yup.object({
   username: Yup.string().required("Username is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
   password: Yup.string().min(8, "Password must be at least 8 characters").required("Password is required"),
-  firstname: Yup.string().required("First name is required"),  // Use firstname
-  lastname: Yup.string().required("Last name is required"),    // Use lastname
+  firstname: Yup.string().required("First name is required"),
+  lastname: Yup.string().required("Last name is required"),
   reg_no: Yup.string().required("Registration number is required"),
   sub_location: Yup.string().required("Sub-location is required"),
   hospital: Yup.string().required("Hospital is required"),
@@ -32,51 +62,94 @@ const nurseSchema = Yup.object().shape({
   gender: Yup.string().required("Gender is required"),
 });
 
-const NurseRegistrationForm: React.FC<NurseRegistrationFormProps> = ({
-  isOpen,
-  onClose,
-  onAddNurse,
-}) => {
+const NurseRegistrationForm: React.FC<NurseRegistrationFormProps> = ({ isOpen, onClose, onAddNurse }) => {
+  const [hospitals, setHospitals] = useState<Hospital[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  // Get unique sub-locations
+  const uniqueSubLocations = Array.from(new Set(ALLOWED_LOCATIONS.map(loc => loc.sub_location)));
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<NurseData>({
+    reset,
+    watch,
+  } = useForm<NurseFormData>({
     resolver: yupResolver(nurseSchema),
   });
 
-  const onSubmit = async (data: NurseData) => {
-    const selectedHospital = hospitals.find(hospital => hospital.name === data.hospital);
-    if (!selectedHospital) {
-      throw new Error('Invalid hospital selected.');
-    }
+  const selectedSubLocation = watch("sub_location");
 
-    const nursePayload = {
-      ...data,
-      hospital_id: selectedHospital.id,
+  useEffect(() => {
+    const fetchHospitals = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/hospitals`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch hospitals');
+        }
+        const hospitalsList = await response.json();
+        setHospitals(hospitalsList);
+      } catch (err) {
+        console.error('Error fetching hospitals:', err);
+        setError(err instanceof Error ? err.message : 'An error occurred while fetching hospitals');
+      }
     };
 
-    await addNurse(nursePayload);
-    onAddNurse(nursePayload);
-    onClose();
+    if (isOpen) {
+      fetchHospitals();
+    }
+  }, [isOpen]);
+
+  const onSubmit = async (data: NurseFormData) => {
+    try {
+      const selectedHospital = hospitals.find((hospital) => hospital.name === data.hospital);
+      const locationData = ALLOWED_LOCATIONS.find(loc => loc.sub_location === data.sub_location);
+
+      if (!selectedHospital || !locationData) {
+        throw new Error("Invalid hospital or location selected.");
+      }
+
+      const nursePayload = {
+        ...data,
+        hospital_id: selectedHospital.id,
+        location: locationData.location,
+        village: locationData.village,
+      };
+
+      await addNurse(nursePayload);
+      onAddNurse(nursePayload);
+      reset();
+      onClose();
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setError(error instanceof Error ? error.message : 'An error occurred while submitting the form');
+    }
   };
 
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-md shadow-xl w-full max-w-xl md:max-w-2xl next-hub:max-w-lg next-hub:mt-4 next-hub:mb-4 next-hub-max:max-w-2xl next-hub-max:mt-4 next-hub-max:mb-4 overflow-y-auto max-h-[90vh]">
-        <h2 className="text-2xl lg:text-3xl font-bold mb-4 text-left text-[#02A6A6]">Register Nurse</h2>
+      <div className="bg-white p-6 rounded-md shadow-xl w-full max-w-xl md:max-w-2xl overflow-y-auto max-h-[90vh]">
+        <h2 className="text-2xl lg:text-3xl font-bold mb-4 text-left text-[#02A6A6]">
+          Register Nurse
+        </h2>
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+            {error}
+          </div>
+        )}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4">
+            {/* Basic Information Fields */}
             {[
               { label: "Username", name: "username" as const },
               { label: "Email", name: "email" as const },
               { label: "Password", name: "password" as const },
-              { label: "First Name", name: "firstname" as const },   // Use firstname
-              { label: "Last Name", name: "lastname" as const },     // Use lastname
+              { label: "First Name", name: "firstname" as const },
+              { label: "Last Name", name: "lastname" as const },
               { label: "Reg No", name: "reg_no" as const },
-              { label: "Sub-Location", name: "sub_location" as const },
               { label: "Phone Number", name: "phone_number" as const },
             ].map(({ label, name }) => (
               <div key={name}>
@@ -95,7 +168,46 @@ const NurseRegistrationForm: React.FC<NurseRegistrationFormProps> = ({
                 )}
               </div>
             ))}
-            
+
+            {/* Sub-location Dropdown */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Sub-location <span className="text-red-500">*</span>
+              </label>
+              <select
+                {...register("sub_location")}
+                className={`border border-gray-300 rounded-md p-2 w-full text-sm focus:outline-none focus:border-[#02A6A6] focus:ring-[#02A6A6] focus:ring-1 ${
+                  errors.sub_location ? "border-red-500" : ""
+                }`}
+              >
+                <option value="">Select Sub-location</option>
+                {uniqueSubLocations.map((subLocation) => (
+                  <option key={subLocation} value={subLocation}>
+                    {subLocation}
+                  </option>
+                ))}
+              </select>
+              {errors.sub_location && (
+                <p className="text-red-500 text-xs mt-1">{errors.sub_location.message}</p>
+              )}
+            </div>
+
+            {/* Village Display */}
+            {selectedSubLocation && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Village
+                </label>
+                <input
+                  type="text"
+                  value={ALLOWED_LOCATIONS.find(loc => loc.sub_location === selectedSubLocation)?.village || ''}
+                  disabled
+                  className="border border-gray-300 rounded-md p-2 w-full text-sm bg-gray-50"
+                />
+              </div>
+            )}
+
+            {/* Hospital Dropdown */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Hospital <span className="text-red-500">*</span>
@@ -107,8 +219,10 @@ const NurseRegistrationForm: React.FC<NurseRegistrationFormProps> = ({
                 }`}
               >
                 <option value="">Select Hospital</option>
-                {hospitals.map(hospital => (
-                  <option key={hospital.id} value={hospital.name}>{hospital.name}</option>
+                {hospitals.map((hospital) => (
+                  <option key={hospital.id} value={hospital.name}>
+                    {hospital.name}
+                  </option>
                 ))}
               </select>
               {errors.hospital && (
@@ -116,6 +230,7 @@ const NurseRegistrationForm: React.FC<NurseRegistrationFormProps> = ({
               )}
             </div>
 
+            {/* Gender Dropdown */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Gender <span className="text-red-500">*</span>

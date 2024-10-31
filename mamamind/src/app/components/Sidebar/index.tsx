@@ -1,7 +1,4 @@
 
-
-
-
 'use client';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
@@ -67,3 +64,4 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
