@@ -1,21 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { NurseData } from "@/app/utils/types";
+import { NurseData, Nurse } from "@/app/utils/types"; // Ensure Nurse includes correct types
 import { addNurse } from "@/app/utils/addNurse";
 
 interface NurseRegistrationFormProps {
   isOpen: boolean;
   onClose: () => void;
-  onAddNurse: (nurseData: NurseData) => void;
+  onAddNurse: (nurseData: Nurse) => void; // Updated to accept Nurse type
 }
-
-const hospitals = [
-  { id: 1, name: "MamaLucy" },
-  { id: 2, name: "Kenyatta Hospital" },
-  { id: 3, name: "Nairobi West" }
-];
 
 const phoneRegExp = /^(\+254|0)[1-9]\d{8}$/;
 
@@ -23,11 +17,11 @@ const nurseSchema = Yup.object().shape({
   username: Yup.string().required("Username is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
   password: Yup.string().min(8, "Password must be at least 8 characters").required("Password is required"),
-  firstname: Yup.string().required("First name is required"),  // Use firstname
-  lastname: Yup.string().required("Last name is required"),    // Use lastname
+  firstname: Yup.string().required("First name is required"),
+  lastname: Yup.string().required("Last name is required"),
   reg_no: Yup.string().required("Registration number is required"),
   sub_location: Yup.string().required("Sub-location is required"),
-  hospital: Yup.string().required("Hospital is required"),
+  hospital_id: Yup.number().required("Hospital selection is required"),
   phone_number: Yup.string().matches(phoneRegExp, "Phone number is not valid").required("Phone number is required"),
   gender: Yup.string().required("Gender is required"),
 });
@@ -37,44 +31,63 @@ const NurseRegistrationForm: React.FC<NurseRegistrationFormProps> = ({
   onClose,
   onAddNurse,
 }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<NurseData>({
+  const [hospitals, setHospitals] = useState<{ id: number; name: string }[]>([]);
+  const { register, handleSubmit, formState: { errors } } = useForm<NurseData>({
     resolver: yupResolver(nurseSchema),
   });
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-  const onSubmit = async (data: NurseData) => {
-    const selectedHospital = hospitals.find(hospital => hospital.name === data.hospital);
-    if (!selectedHospital) {
-      throw new Error('Invalid hospital selected.');
-    }
-
-    const nursePayload = {
-      ...data,
-      hospital_id: selectedHospital.id,
+  useEffect(() => {
+    const fetchHospitals = async () => {
+      try {
+        const response = await fetch(`${baseUrl}/api/hospitals`);
+        const hospitalList = await response.json();
+        setHospitals(hospitalList);
+      } catch (error) {
+        console.error("Error fetching hospitals:", error);
+      }
     };
 
-    await addNurse(nursePayload);
-    onAddNurse(nursePayload);
-    onClose();
+    fetchHospitals();
+  }, [baseUrl]);
+
+  const onSubmit = async (data: NurseData) => {
+    const nurse: Nurse = {
+      username: data.username,
+      email: data.email,
+      password: data.password,
+      firstname: data.firstname,
+      lastname: data.lastname,
+      reg_no: data.reg_no,
+      sub_location: data.sub_location,
+      hospital_id: data.hospital_id, // Use hospital_id directly
+      phone_number: data.phone_number,
+      gender: data.gender,
+    };
+
+    try {
+      const newNurse = await addNurse(nurse);
+      onAddNurse(newNurse);
+      onClose();
+    } catch (error) {
+      console.error("Error adding nurse:", error);
+    }
   };
 
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-md shadow-xl w-full max-w-xl md:max-w-2xl next-hub:max-w-lg next-hub:mt-4 next-hub:mb-4 next-hub-max:max-w-2xl next-hub-max:mt-4 next-hub-max:mb-4 overflow-y-auto max-h-[90vh]">
-        <h2 className="text-2xl lg:text-3xl font-bold mb-4 text-left text-[#02A6A6]">Register Nurse</h2>
+      <div className="bg-white p-6 rounded-md shadow-xl w-full max-w-xl">
+        <h2 className="text-2xl font-bold mb-4 text-[#02A6A6]">Register Nurse</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
               { label: "Username", name: "username" as const },
               { label: "Email", name: "email" as const },
               { label: "Password", name: "password" as const },
-              { label: "First Name", name: "firstname" as const },   // Use firstname
-              { label: "Last Name", name: "lastname" as const },     // Use lastname
+              { label: "First Name", name: "firstname" as const },
+              { label: "Last Name", name: "lastname" as const },
               { label: "Reg No", name: "reg_no" as const },
               { label: "Sub-Location", name: "sub_location" as const },
               { label: "Phone Number", name: "phone_number" as const },
@@ -86,45 +99,37 @@ const NurseRegistrationForm: React.FC<NurseRegistrationFormProps> = ({
                 <input
                   type={name === "email" ? "email" : name === "password" ? "password" : "text"}
                   {...register(name)}
-                  className={`border border-gray-300 rounded-md p-2 w-full text-sm focus:outline-none focus:border-[#02A6A6] focus:ring-[#02A6A6] focus:ring-1 ${
-                    errors[name] ? "border-red-500" : ""
-                  }`}
+                  className={`border border-gray-300 rounded-md p-2 w-full ${errors[name] ? "border-red-500" : ""}`}
                 />
                 {errors[name] && (
                   <p className="text-red-500 text-xs mt-1">{errors[name]?.message}</p>
                 )}
               </div>
             ))}
-            
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Hospital <span className="text-red-500">*</span>
               </label>
               <select
-                {...register("hospital")}
-                className={`border border-gray-300 rounded-md p-2 w-full text-sm focus:outline-none focus:border-[#02A6A6] focus:ring-[#02A6A6] focus:ring-1 ${
-                  errors.hospital ? "border-red-500" : ""
-                }`}
+                {...register("hospital_id")}
+                className={`border border-gray-300 rounded-md p-2 w-full ${errors.hospital_id ? "border-red-500" : ""}`}
               >
                 <option value="">Select Hospital</option>
-                {hospitals.map(hospital => (
-                  <option key={hospital.id} value={hospital.name}>{hospital.name}</option>
+                {hospitals.map((hospital) => (
+                  <option key={hospital.id} value={hospital.id}>{hospital.name}</option>
                 ))}
               </select>
-              {errors.hospital && (
-                <p className="text-red-500 text-xs mt-1">{errors.hospital.message}</p>
+              {errors.hospital_id && (
+                <p className="text-red-500 text-xs mt-1">{errors.hospital_id.message}</p>
               )}
             </div>
-
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Gender <span className="text-red-500">*</span>
               </label>
               <select
                 {...register("gender")}
-                className={`border border-gray-300 rounded-md p-2 w-full text-sm focus:outline-none focus:border-[#02A6A6] focus:ring-[#02A6A6] focus:ring-1 ${
-                  errors.gender ? "border-red-500" : ""
-                }`}
+                className={`border border-gray-300 rounded-md p-2 w-full ${errors.gender ? "border-red-500" : ""}`}
               >
                 <option value="">Select Gender</option>
                 <option value="Male">Male</option>
@@ -136,23 +141,19 @@ const NurseRegistrationForm: React.FC<NurseRegistrationFormProps> = ({
               )}
             </div>
           </div>
-
-          <div className="flex items-center justify-end space-x-4 mt-6">
-            <button
-              type="button"
-              onClick={onClose}
-              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 text-sm rounded focus:outline-none focus:shadow-outline"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="bg-[#F18721] hover:bg-[#E16701] text-white font-bold py-2 px-4 text-sm rounded focus:outline-none focus:shadow-outline"
-            >
-              Register
-            </button>
-          </div>
+          <button
+            type="submit"
+            className="bg-[#02A6A6] text-white rounded-md p-2 mt-4 w-full"
+          >
+            Register Nurse
+          </button>
         </form>
+        <button
+          onClick={onClose}
+          className="mt-4 text-gray-600 hover:text-gray-900"
+        >
+          Cancel
+        </button>
       </div>
     </div>
   );

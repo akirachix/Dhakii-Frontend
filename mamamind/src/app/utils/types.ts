@@ -1,15 +1,18 @@
+
+
 export interface NurseData {
   username: string;
   email: string;
-  firstname: string;  // Keep as firstname for backend consistency
-  lastname: string;   // Keep as lastname for backend consistency
-  password: string; 
+  password: string;
+  firstname: string;
+  lastname: string;
   reg_no: string;
   sub_location: string;
-  hospital: string;
+  hospital_id: number; // Add this line
   phone_number: string;
   gender: string;
 }
+
 
 export interface RegistrationSuccessResponse {
   message: string;
@@ -73,17 +76,32 @@ export interface FormData {
   nextOfKin: NextOfKinDetails;
 }
 
+// export interface Nurse {
+//   firstname: string;  // Nurse model uses firstname and lastname
+//   lastname: string;
+//   hospital: string;
+//   phone_number: string;
+//   nurse_id?: number;
+//   email: string;
+//   username: string;
+//   gender: string;
+//   reg_no: string;
+//   sub_location: string;
+// }
+
+
 export interface Nurse {
-  firstname: string;  // Nurse model uses firstname and lastname
-  lastname: string;
-  hospital: string;
-  phone_number: string;
-  nurse_id?: number;
-  email: string;
   username: string;
-  gender: string;
+  email: string;
+  password: string;
+  firstname: string;
+  lastname: string;
   reg_no: string;
   sub_location: string;
+  hospital: string; // Ensure this is a string if you want to use hospital name
+  phone_number: string;
+  gender: string;
 }
+
 
  

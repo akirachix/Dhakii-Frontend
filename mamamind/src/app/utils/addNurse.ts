@@ -3,18 +3,22 @@ import { Nurse as NurseType } from "./types";
 const addNurseUrl = "/api/addNurse";
 
 export const addNurse = async (data: NurseType): Promise<NurseType> => {
-  if (
-    !data.firstname ||
-    !data.lastname ||
-    !data.email ||
-    !data.sub_location ||
-    !data.phone_number ||
-    !data.gender ||
-    !data.reg_no ||
-    !data.hospital ||
-    !data.username
-  ) {
-    throw new Error("All fields are required to add a nurse.");
+  const requiredFields = [
+    'firstname', 
+    'lastname', 
+    'email', 
+    'sub_location', 
+    'phone_number', 
+    'gender', 
+    'reg_no', 
+    'hospital', 
+    'username'
+  ];
+
+  for (const field of requiredFields) {
+    if (!data[field]) {
+      throw new Error(`Field '${field}' is required to add a nurse.`);
+    }
   }
 
   console.log("Sending nurse data:", data);
@@ -28,16 +32,15 @@ export const addNurse = async (data: NurseType): Promise<NurseType> => {
       body: JSON.stringify(data),
     });
 
+    // Handle response
     if (!response.ok) {
       const errorResponse = await response.json();
       console.error("Error response:", errorResponse);
       const errorMessage = errorResponse?.error || response.statusText;
-      throw new Error(
-        `Failed to add nurse. Status: ${response.status} - ${errorMessage}`
-      );
+      throw new Error(`Failed to add nurse. Status: ${response.status} - ${errorMessage}`);
     }
 
-    const newNurse = (await response.json()) as NurseType;
+    const newNurse = await response.json() as NurseType;
     console.log("Added nurse data:", newNurse);
     return newNurse;
   } catch (error) {
