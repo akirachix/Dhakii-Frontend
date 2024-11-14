@@ -59,8 +59,8 @@ const Sidebar = () => {
         <SidebarItem Icon={BsPeopleFill} label="Mothers' Details" path="/mothersDetails" />
         <SidebarItem Icon={RiTeamFill} label="CHPs' Details" path="/chps" />
         <SidebarItem Icon={FaUserNurse} label="Nurses" path="/NurseList" />
-        <SidebarItem Icon={PiHospitalFill} label="Nurse Admin" path="/nurse-admin" />
-        <SidebarItem Icon={PiHospitalFill} label="Hospitals" path="/hospitals" />
+        {/* <SidebarItem Icon={PiHospitalFill} label="Nurse Admin" path="/nurse-admin" />
+        <SidebarItem Icon={PiHospitalFill} label="Hospitals" path="/hospitals" /> */}
       </nav>
     </div>
   );
